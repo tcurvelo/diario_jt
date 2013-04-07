@@ -5,14 +5,17 @@ import os
 
 from pyvirtualdisplay import Display
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import Select, WebDriverWait
 from xml.etree import ElementTree
 
 
 # Configura o browser para baixar pdf's sem perguntar e define para salvar
 fp = webdriver.FirefoxProfile('./firefox_profile')
-fp.set_preference("browser.download.dir", os.getcwd())
+download_dir = os.getcwd()
+fp.set_preference("browser.download.dir", download_dir)
 fp.set_preference("browser.download.folderList", 2)
+fp.set_preference("browser.download.manager.closeWhenDone", "True")
+
 
 # Inicia o display e o browser
 display = Display(visible=0, size=(800, 600))
@@ -39,6 +42,10 @@ assert u"Caderno do TRT da 13\xaa REGI\xc3O" in elem.text
 
 # 5 Clica no botao de baixar o diario
 browser.find_element_by_css_selector("button.bt.af_commandButton").click()
+
+WebDriverWait(browser, 20).until(
+    lambda x: len([True for f in os.listdir(download_dir) if '.part' in f]) == 0
+)
 
 # encerra o browser e o display
 browser.quit()
