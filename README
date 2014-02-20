@@ -1,0 +1,11 @@
+Script para download do diário da justiça
+=========================================
+
+Instale as dependências:
+
+    pip install -r requirements.txt
+
+Execute:
+
+    python diario.py
+
