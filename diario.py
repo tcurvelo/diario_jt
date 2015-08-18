@@ -11,6 +11,7 @@ fp = webdriver.FirefoxProfile('./firefox_profile')
 download_dir = os.getcwd()
 fp.set_preference("browser.download.dir", download_dir)
 fp.set_preference("browser.download.folderList", 2)
+fp.set_preference("pdfjs.migrationVersion", 1);
 
 
 # Inicia o display e o browser
